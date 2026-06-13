@@ -1,5 +1,5 @@
-import { Card,Badge, Col, Button } from "react-bootstrap";
-import { useEffect, useState, useContext } from "react";
+import { Card,Badge, Button } from "react-bootstrap";
+import { useContext } from "react";
 import { WorkoutContext } from "../contexts/WorkoutContext";
 
 export default function WorkoutCard({workout}) {
