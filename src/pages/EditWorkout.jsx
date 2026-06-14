@@ -28,7 +28,7 @@ export default function EditWorkout() {
 
     return (
         <Container>
-            <h1 className="my-3">Add Workout</h1>
+            <h1 className="my-3">Edit Workout</h1>
             <Form onSubmit={updateWorkout}>
                 <Form.Group className="mb-3" controlId="day">
                     <Form.Label className="fw-bold">Workout Day</Form.Label>
