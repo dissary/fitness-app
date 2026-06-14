@@ -1,6 +1,7 @@
-# Fitness Application (Frontend Project)
+# Fitness Application (Front-End Project)
 
 This application will be able to
 
-- store, edit, update your workouts
-- timer
+- store, edit, and update your workouts
+- timer app
+- log in & log out
