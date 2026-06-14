@@ -8,10 +8,19 @@ import { useLocalStorage } from "usehooks-ts";
 import { WorkoutContext } from "./contexts/WorkoutContext";
 import EditWorkout from "./pages/EditWorkout";
 import Timer from "./pages/Timer";
+import Login from "./pages/Login";
 import logo from "./images/logo-barbell.png"
 import "./App.css"
+import { useContext } from "react";
+import RequireAuth from "./components/RequireAuth";
 
 function Layout() {
+    const { token, setToken } = useContext(WorkoutContext);
+
+    function logout() {
+      setToken(null)
+    }
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -22,13 +31,18 @@ function Layout() {
           src={logo}
           className="d-inline-block align-top"/> Gym Hood</Navbar.Brand>
           <Navbar.Toggle/>
-          <Navbar.Collapse>
-          <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/add">Add Workout</Nav.Link>
-            <Nav.Link href="/timer">Timer</Nav.Link>
-          </Nav>
-          </Navbar.Collapse>
+            <Navbar.Collapse>
+              <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/add">Add Workout</Nav.Link>
+                <Nav.Link href="/timer">Timer</Nav.Link>
+              </Nav>
+              <Nav className="ms-auto">
+                {!token ? (<Nav.Link href="/login">Login</Nav.Link>)
+                : (<Nav.Link onClick={logout}>Logout</Nav.Link>
+                ) }
+              </Nav>
+            </Navbar.Collapse>
         </Container>
       </Navbar>
       <Outlet/>
@@ -38,16 +52,20 @@ function Layout() {
 
 export default function App() {
   const [workouts, setWorkouts] = useLocalStorage("workouts", []);
+  const [token, setToken] = useLocalStorage("token",null);
+
   return (
-    <WorkoutContext.Provider value={{workouts, setWorkouts}}>
+    <WorkoutContext.Provider value={{workouts, setWorkouts, token, setToken}}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout/>}>
-            <Route index element={<Home/>}/>
-            <Route path="add" element={<AddWorkout/>}/>
+            <Route index element={<RequireAuth><Home/></RequireAuth>}/>
+            {/* <Route index element={<Home/>}/> */}
+            <Route path="add" element={<RequireAuth><AddWorkout/></RequireAuth>}/>
             <Route path="timer" element={<Timer/>}/>
             <Route path="*" element={<ErrorPage/>}/>
-            <Route path="workout/:id" element={<EditWorkout/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="workout/:id" element={<RequireAuth><EditWorkout/></RequireAuth>}/>
           </Route>
         </Routes>
       </BrowserRouter>

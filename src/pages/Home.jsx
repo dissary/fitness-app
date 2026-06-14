@@ -1,4 +1,4 @@
-import { Button, Container, Badge, Col, Row, Card } from "react-bootstrap"
+import { Button, Container, Col, Row } from "react-bootstrap"
 import { useContext, useState } from "react";
 import { WorkoutContext } from "../contexts/WorkoutContext";
 import WorkoutCard from "../components/WorkoutCard";

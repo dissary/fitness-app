@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 export default function Timer() {
     const [timer, setTimer] = useState(0);
